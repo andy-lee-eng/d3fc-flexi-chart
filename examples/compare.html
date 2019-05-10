@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- include polyfills for custom event, Symbol and Custom Elements -->
+  <script src="https://unpkg.com/babel-polyfill@6.26.0/dist/polyfill.js"></script>
+  <script src="https://unpkg.com/custom-event-polyfill@0.3.0/custom-event-polyfill.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.8.0/document-register-element.js"></script>
+
+  <script src="https://unpkg.com/d3@5.5.0"></script>
+  <script src="https://unpkg.com/d3fc@14.0.39"></script>
+  <script src="../build/d3fc-flexi-chart.js"></script>
+
+  <style>
+    html, body, #content, #chart, #cartesian {
+      height: 100%;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    #content {
+      display: flex;
+      flex-direction: row;
+    }
+    #chart, #cartesian {
+      flex: 1 0 auto;
+      padding: 10px;
+      border: 1px solid #888;
+    }
+    path.area {
+        fill: #99ff99;
+        fill-opacity: 0.5;
+    }
+    path.line {
+        stroke: #60c;
+    }
+    .annotation-gridline line {
+        stroke: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">
+    <div id="chart"></div>
+    <div id="cartesian"></div>
+  </div>
+  <script src="compare.js"></script>
+</body>
+</html>
