@@ -1,6 +1,6 @@
 {
   "name": "d3fc-flexi-chart",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A flexible alternative to the d3fc cartesian chart",
   "license": "MIT",
   "main": "build/d3fc-flexi-chart.js",
