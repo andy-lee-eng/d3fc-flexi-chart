@@ -40,18 +40,20 @@ becomes this:
 const chart = fcFlexi.chart()
   .leftLabel('Sine / Cosine')
   .bottomLabel('Value')
-  .layers(
+  .layers([
     fcFlexi.svgLayer(d3.scaleLinear(), d3.scaleLinear())
       .yOrient('left')
       .yDomain(yExtent(data))
       .xDomain(xExtent(data))
       .plotArea(multiSvg)
-  );
+  ]);
 ```
 
 Most of the properties of the original `chartCartesian` are now properties of the "layer" component. The chart itself provides properties for `leftLabel`, `topLabel`, `rightLabel` and `bottomLabel`.
 
 Each layer has its own xScale and yScale, and its own series. This allows you to compose more complex charts with multiple layers, different scales, and multiple x/y axes, while keeping the API simple and familiar.
+
+For example, here's a chart with 3 layers, each sharing the same xScale but having different yScales.
 
 <img src="screenshots/flexi-layers.png">
 
@@ -61,7 +63,7 @@ Given the following div:
 <div id="sine" style="width: 500px; height: 250px"></div>
 ```
 
-The following code renders a Cartesian chart:
+The following code renders a chart:
 
 ```javascript
 var data = d3.range(50).map((d) => ({
