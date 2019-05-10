@@ -46,44 +46,45 @@ var bar2Canvas = fc.seriesCanvasBar()
   .bandwidth(10)
   .decorate(context => context.fillStyle = bar2Color);
   
+const sinCosLayer = fcFlexi.svgLayer(d3.scaleLinear(), d3.scaleLinear())
+  .yOrient('left')
+  .yDomain([-1.1, 1.1])
+  .xDomain([0, 12])
+  .plotArea(multiSvg);
+
+const bar1Layer = fcFlexi.canvasLayer(d3.scaleLinear(), d3.scaleLinear())
+  .xOrient('none')
+  .yDomain([0, 100])
+  .xDomain([0, 12])
+  .plotArea(bar1Canvas)
+  .yDecorate(s => {
+    d3.select(s.node().parentNode).selectAll('path').style('stroke-width', '2px').style('stroke', bar1Color);
+    s.selectAll('text').style('stroke', bar1Color);
+  });
+
+const bar2Layer = fcFlexi.canvasLayer(d3.scaleLinear(), d3.scaleLinear())
+  .xOrient('none')
+  .yDomain([0, 200])
+  .xDomain([0, 12])
+  .plotArea(bar2Canvas)
+  .yDecorate(s => {
+    d3.select(s.node().parentNode).selectAll('path').style('stroke-width', '2px').style('stroke', bar2Color);
+    s.selectAll('text').style('stroke', bar2Color);
+  });
+
 var chart = fcFlexi.chart()
   .bottomLabel('Value')
   .rightLabel('Bars 1 and 2')
   .leftLabel('Sine / Cosine')
-  .layers(
-    fcFlexi.svgLayer(d3.scaleLinear(), d3.scaleLinear())
-      .yOrient('left')
-      .yDomain([-1.1, 1.1])
-      .xDomain([0, 12])
-      .plotArea(multiSvg),
-    fcFlexi.canvasLayer(d3.scaleLinear(), d3.scaleLinear())
-      .xOrient('none')
-      .yDomain([0, 100])
-      .xDomain([0, 12])
-      .plotArea(bar1Canvas)
-      .yDecorate(s => {
-        d3.select(s.node().parentNode).selectAll('path').style('stroke-width', '2px').style('stroke', bar1Color);
-        s.selectAll('text').style('stroke', bar1Color);
-      }),
-    fcFlexi.canvasLayer(d3.scaleLinear(), d3.scaleLinear())
-      .xOrient('none')
-      .yDomain([0, 200])
-      .xDomain([0, 12])
-      .plotArea(bar2Canvas)
-      .yDecorate(s => {
-        d3.select(s.node().parentNode).selectAll('path').style('stroke-width', '2px').style('stroke', bar2Color);
-        s.selectAll('text').style('stroke', bar2Color);
-      })
-  )
-  .map((data, index) => {
-    switch(index)
-    {
-      case 0:
-        return sinCos;
-      case 1:
-        return bars1;
-      case 2:
-        return bars2;
+  .layers([sinCosLayer, bar1Layer, bar2Layer])
+  .mapping((data, index, layers) => {
+    switch(layers[index]) {
+      case sinCosLayer:
+        return data.sinCos;
+      case bar1Layer:
+        return data.bars1;
+      case bar2Layer:
+        return data.bars2;
     }
   })
   .decorate(s => {

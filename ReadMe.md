@@ -87,17 +87,16 @@ var area = fc.seriesCanvasArea()
 var multi = fc.seriesCanvasMulti()
   .series([area, line]);
 
-// the d3fc-flexi-chart component, which uses d3fc-element for layout
-// of the standard features of a chart (axes, labels, plot area)
+var layer = fcFlexi.canvasLayer(d3.scaleLinear(), d3.scaleLinear())
+  .yDomain(yExtent(data))
+  .xDomain(xExtent(data))
+  .plotArea(multi);
+
+// the d3fc-flexi-chart component
 var chart = fcFlexi.chart()
   .leftLabel('Sine / Cosine')
   .bottomLabel('Value')
-  .layers(
-    fcFlexi.canvasLayer(d3.scaleLinear(), d3.scaleLinear())
-      .yDomain(yExtent(data))
-      .xDomain(xExtent(data))
-      .plotArea(multi)
-  );
+  .layers([layer]);
 
 // render
 d3.select('#sine')
@@ -166,6 +165,31 @@ Constructs a new Flexi chart.
 If *label* is specified, sets the text for the given label, and returns the Flexi chart. If *label* is not specified, returns the label text.
 
 The *label* value can either be a string, or a function that returns a string. If it is a function, it will be invoked with the data that is 'bound' to the chart. This can be useful if you are rendering multiple charts using a data join.
+
+<a name="chart_layers" href="#chart_layers">#</a> *chart*.**layers**(*layerArray*)  
+
+If *layerArray* is specified, sets the array of layer components that this chart should render and returns this chart. If *layerArray* is not specified, returns the current array of layers.
+
+<a name="chart_mapping" href="#chart_mapping">#</a> *chart*.**mapping**(*mappingFunc*)
+
+If *mappingFunc* is specified, sets the mapping function to the specified function, and returns this chart. If *mappingFunc* is not specified, returns the current mapping function.
+
+When rendering the layers, the mapping function is invoked once for each of the layer supplied via the *layers* property. The purpose of the mapping function is to return the data supplied to each of these layers. The default mapping is the identity function, `(d) => d`, which results in each layer being supplied with the same data as the chart.
+
+The mapping function is invoked with the data bound to the chart, (*data*), the index of the current series (*index*) and the array of layers (*layers*). A common pattern for the mapping function is to switch on the layer type. For example, a chart could be used to render "price" as well as "volume", with different yScales. In this case, the following would be a suitable mapping function:
+
+```javascript
+const chart = fcFlexi.chart()
+    .layers([price, volume])
+    .mapping((data, index, layers) => {
+      switch(layers[index]) {
+        case price:
+          return data.price;
+        case volume:
+          return data.volume;
+      }
+    });
+```
 
 <a name="chart_decorate" href="#chart_decorate">#</a> *chart*.**decorate**(*decorateFunc*)
 

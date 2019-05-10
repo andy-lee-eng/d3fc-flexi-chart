@@ -12,7 +12,7 @@ export default () => {
   let bottomLabel = functor('');
 
   let layers = [];
-  let map = d => d;
+  let mapping = d => d;
   let decorate = () => { };
 
   const containerDataJoin = dataJoin('d3fc-group', 'flexi-chart');
@@ -96,7 +96,7 @@ export default () => {
         })
         .on('draw', (layer, i, nodes) => {
           const surface = (layer.element == 'd3fc-svg') ? 'svg' : 'canvas';
-          const layerData = map(data, i, layer);
+          const layerData = mapping(data, i, layers);
           select(nodes[i]).select(surface).datum(layerData).call(layer);
         });
 
@@ -150,11 +150,11 @@ export default () => {
     return chart;
   };
 
-  chart.map = (...args) => {
+  chart.mapping = (...args) => {
     if (!args.length) {
-        return map;
+        return mapping;
     }
-    map = args[0];
+    mapping = args[0];
     return chart;
   };
 
