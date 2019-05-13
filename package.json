@@ -3,8 +3,8 @@
   "version": "0.0.2",
   "description": "A flexible alternative to the d3fc cartesian chart",
   "license": "MIT",
-  "main": "build/d3fc-flexi-chart.js",
-  "module": "index",
+  "homepage": "https://github.com/DevAndyLee/d3fc-flexi-chart",
+  "main": "index",
   "scripts": {
     "build": "rollup -c",
     "uglify": "uglifyjs build/d3fc-flexi-chart.js --output build/d3fc-flexi-chart.min.js",
@@ -21,6 +21,7 @@
     "@babel/preset-env": "^7.4.4",
     "rollup": "^1.11.3",
     "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-node-resolve": "^4.2.4",
     "uglify-js": "^3.5.11"
   },
   "dependencies": {

@@ -20,7 +20,7 @@ export default () => {
   const axisDataJoin = dataJoin('div', 'axis').key(d => d);
   const axisComponentJoin = dataJoin('d3fc-svg', 'axis-component').key(d => d);
   
-  const layerDataJoin = function dataJoin(container, data) {
+  const layerDataJoin = (container, data) => {
     const selected = container.selectAll('.plot-area');
     const update = selected.data(data, d => d);
     const enter = update.enter().append(d => document.createElement(d.element)).attr('class', 'plot-area');
@@ -88,13 +88,15 @@ export default () => {
 
       // Render the layers
       layerDataJoin(container, layers)
-        .on('measure', (layer) => {
+        .on('measure', (d, i, nodes) => {
           const { width, height } = event.detail;
+          const layer = layers[i];
           // Set the ranges on this layer
           layer.yScale().range([height, 0]);
           layer.xScale().range([0, width]);
         })
-        .on('draw', (layer, i, nodes) => {
+        .on('draw', (d, i, nodes) => {
+          const layer = layers[i];
           const surface = (layer.element == 'd3fc-svg') ? 'svg' : 'canvas';
           const layerData = mapping(data, i, layers);
           select(nodes[i]).select(surface).datum(layerData).call(layer);

@@ -1,9 +1,11 @@
-var babel = require('rollup-plugin-babel');
+import babel from 'rollup-plugin-babel';
+import resolve from 'rollup-plugin-node-resolve';
 
 const packageName = 'd3fc-flexi-chart';
 
 const external = function (key) {
-  return (key.indexOf('d3-') === 0) || (key.indexOf('@d3fc/') === 0);
+  return (key.indexOf('d3-') === 0)
+      || (key.indexOf('@d3fc/') === 0);
 };
 const globals = function (key) {
   if (key.indexOf('d3-') === 0) {
@@ -28,9 +30,10 @@ export default {
       babel({
           babelrc: false,
           presets: [
-              ['@babel/preset-env', { modules: false } ]
+              ['@babel/preset-env']
           ]
-      })
+      }),
+      resolve({ mainFields: ['module'] })
   ],
   external
 }
