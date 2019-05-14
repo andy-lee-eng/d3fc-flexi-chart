@@ -30,9 +30,10 @@ var data = {
 
 // gridlines (from d3fc-annotation)
 var gridlinesSvg = fc.annotationSvgGridline();
-var lineSvg = fc.seriesSvgLine();
+var lineSvg = fc.seriesSvgLine().curve(d3.curveCatmullRom);
 var areaSvg = fc.seriesSvgArea()
-  .mainValue(d => d.z);
+  .mainValue(d => d.z)
+  .curve(d3.curveCatmullRom);
 
 var multiSvg = fc.seriesSvgMulti()
   .series([gridlinesSvg, areaSvg, lineSvg]);
