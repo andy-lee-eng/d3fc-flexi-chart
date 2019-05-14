@@ -2,7 +2,6 @@ import { rebindAll } from '@d3fc/d3fc-rebind';
 import layer from '../layer';
 
 export default (...args) => {
-  let contextType = '2d';
   const base = layer(...args);
 
   const canvasLayer = (selection) => {
@@ -11,15 +10,9 @@ export default (...args) => {
     const canvas = selection.node();
     const data = selection.datum();
 
-    base.plotArea().context(canvas.getContext(contextType))(data);
-  };
-
-  canvasLayer.contextType = (...args) => {
-    if (!args.length) {
-        return contextType;
-    }
-    contextType = args[0];
-    return canvasLayer;
+    const series = base.plotArea();
+    let contextType = series.contextType || '2d';
+    series.context(canvas.getContext(contextType))(data);
   };
 
   rebindAll(canvasLayer, base);
