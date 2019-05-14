@@ -11,7 +11,7 @@ export default (...args) => {
     const data = selection.datum();
 
     const series = base.plotArea();
-    let contextType = series.contextType || '2d';
+    let contextType = series.contextType ? series.contextType() : '2d';
     series.context(canvas.getContext(contextType))(data);
   };
 
