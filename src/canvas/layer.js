@@ -2,7 +2,7 @@ import { rebindAll } from '@d3fc/d3fc-rebind';
 import layer from '../layer';
 
 export default (...args) => {
-  const contextType = '2d';
+  let contextType = '2d';
   const base = layer(...args);
 
   const canvasLayer = (selection) => {
