@@ -1,6 +1,6 @@
 {
   "name": "d3fc-flexi-chart",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A flexible alternative to the d3fc cartesian chart",
   "license": "MIT",
   "homepage": "https://github.com/DevAndyLee/d3fc-flexi-chart",
