@@ -17,12 +17,12 @@ export default () => {
 
   const containerDataJoin = dataJoin('d3fc-group', 'flexi-chart');
   const labelDataJoin = dataJoin('div', 'label-container').key(d => d);
-  const axisDataJoin = dataJoin('div', 'axis').key(d => d);
-  const axisComponentJoin = dataJoin('d3fc-svg', 'axis-component').key(d => d);
+  const axisDataJoin = dataJoin('div', 'axis').key(d => d.id);
+  const axisComponentJoin = dataJoin('d3fc-svg', 'axis-component').key((d, i) => i);
   
   const layerDataJoin = (container, data) => {
     const selected = container.selectAll('.plot-area');
-    const update = selected.data(data, d => d);
+    const update = selected.data(data, (d, i) => i);
     const enter = update.enter().append(d => document.createElement(d.element)).attr('class', 'plot-area');
     update.exit().remove();
     // automatically merge in the enter selection
