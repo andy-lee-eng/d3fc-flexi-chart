@@ -16,7 +16,7 @@ export default () => {
   let decorate = () => { };
 
   const containerDataJoin = dataJoin('d3fc-group', 'flexi-chart');
-  const labelDataJoin = dataJoin('div', 'label-container').key(d => d);
+  const labelDataJoin = dataJoin('div', 'label-container').key(d => d.id);
   const axisDataJoin = dataJoin('div', 'axis').key(d => d.id);
   const axisComponentJoin = dataJoin('d3fc-svg', 'axis-component').key((d, i) => i);
   
@@ -49,7 +49,7 @@ export default () => {
       const chartLabels = labelDataJoin(container, axes);
       chartLabels.enter().append('div').classed('label', true);
       chartLabels
-        .attr('class', d => `label ${d.id}-label`)
+        .attr('class', d => `label-container ${d.id}-label`)
         .select('.label')
         .text(d => d.label(data));
 
